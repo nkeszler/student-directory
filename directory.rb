@@ -6,3 +6,6 @@ puts "Georgio"
 puts "JB"
 puts "Lara"
 puts "James"
+print "Overall we have "
+print 9
+puts " great students"
