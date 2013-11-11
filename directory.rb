@@ -4,9 +4,9 @@ def print_header
 	puts "-------------"
 end
 
-def print(names)
-	names.each do |name|
-		puts name
+def print(students)
+	students.each do |student|
+		puts "#{student[:name]} (#{student[:cohort]} cohort)"
 	end
 end
 
@@ -16,12 +16,12 @@ end
 
 # Lets put all the students in an array
 students = [
-	"Nicki",
-	"Chris",
-	"Georgio",
-	"JB",
-	"Lara",
-	"James",
+	{:name => "Nicki", :cohort => :november},
+	{:name => "Chris", :cohort => :november},
+	{:name => "Georgio", :cohort => :november},
+	{:name => "JB", :cohort => :november},
+	{:name => "Lara", :cohort => :november},
+	{:name => "James", :cohort => :november},
 ]
 
 # Nothing happens until we call the methods 
