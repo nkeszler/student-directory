@@ -14,7 +14,7 @@ def print_header
 	puts "-------------"
 end
 
-def print(students)
+def print_students(students)
 	if !students.empty?
 		longest_name = find_longest_name(students, 'name')
 		longest_nationality = find_longest_name(students, 'nationality')
@@ -30,15 +30,15 @@ def print_footer(names)
 end
 
 def input_students
-	puts "Please enter the names of the students"
-	puts "To finish, just hit return twice"
+	puts "Please enter Student Information"
 	# Create an empty array
 	students = []
 	# get the first name
+	print "Name: "
 	name = gets.chomp
-	puts "Now enter their Cohort"
+	print "Now enter their Cohort: "
 	cohort = gets.chomp
-	puts "And their Nationality"
+	print "And their Nationality: "
 	nationality = gets.chomp
 	while !name.empty? do
 		if cohort.empty?
@@ -48,16 +48,24 @@ def input_students
 			nationality = "(Na)"
 		end
 		students << {:name => name, :cohort => cohort, :nationality => nationality}
+		puts ""
 		puts "Now we have #{students.length} student(s)"
-		puts "Name:"
-		name = gets.chomp
-		if name.empty?
-			break
-		end
-		puts "Cohort:"
-		cohort = gets.chomp
-		puts "Nationality:"
-		nationality = gets.chomp
+		puts "Would you like to enter another? [Y/N] "
+		answer = gets.chomp
+		puts ""
+		if answer.casecmp('y') == 0
+			print "Name:"
+			name = gets.chomp
+			if name.empty?
+				break
+			end
+			print "Cohort:"
+			cohort = gets.chomp
+			print "Nationality:"
+			nationality = gets.chomp
+		elsif answer.casecmp('n') == 0
+			name = ""
+		end	
 	end
 	# return the array of students
 	students
@@ -78,5 +86,5 @@ students = [
 # Nothing happens until we call the methods 
 students = input_students
 print_header
-print(students)
+print_students(students)
 print_footer(students)
