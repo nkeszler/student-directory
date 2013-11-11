@@ -1,3 +1,19 @@
+# Define Methods
+def print_header
+	puts "The students in my cohort at Makers Academy"
+	puts "-------------"
+end
+
+def print(names)
+	names.each do |name|
+		puts name
+	end
+end
+
+def print_footer(names)
+	puts "Overall we have #{names.length} great students"
+end
+
 # Lets put all the students in an array
 students = [
 	"Nicki",
@@ -7,10 +23,8 @@ students = [
 	"Lara",
 	"James",
 ]
-puts "The students in my cohort at Makers Academy"
-puts "-------------"
-students.each do |student|
-	puts student
-end
-# Finally we print the total
-puts "Overall we have #{students.length} great students"
+
+# Nothing happens until we call the methods 
+print_header
+print(students)
+print_footer(students)
