@@ -75,6 +75,7 @@ def prompt
 		puts "--------------------------"
 		puts "1. Input Students"
 		puts "2. Show Students"
+		puts "3. Save Students to File"
 		puts "9. Exit"
 		puts ""
 end
@@ -91,6 +92,8 @@ def process(choice)
 		students = input_students
 	when "2"
 		show_students
+	when "3"
+		save_students
 	when "9"
 		exit
 	else	
@@ -103,6 +106,17 @@ def menu_loop
 		prompt
 		process(gets.chomp)
 	end
+end
+
+def save_students
+	# open file for writing
+	file = File.open("students.csv","w")
+	@students.each do |student|
+		student_data = [student[:name], student[:nationality], student[:cohort]]
+		csv_line = student_data.join(", ")
+		file.puts csv_line
+	end
+	file.close
 end
 
 # Nothing happens until we call the methods 
