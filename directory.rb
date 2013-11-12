@@ -1,7 +1,8 @@
+@students = []
 # Define Methods
-def find_longest_name(students, key)
+def find_longest_name(key)
 	longest_name = 0
-	students.each do |student|
+	@students.each do |student|
 		if student[key.to_sym].length > longest_name
 			longest_name = student[key.to_sym].length
 		end
@@ -14,22 +15,22 @@ def print_header
 	puts "-------------"
 end
 
-def print_students(students)
-	if !students.empty?
-		longest_name = find_longest_name(students, 'name')
-		longest_nationality = find_longest_name(students, 'nationality')
-		students.each_with_index do |student, i|
+def print_students
+	if !@students.empty?
+		longest_name = find_longest_name('name')
+		longest_nationality = find_longest_name('nationality')
+		@students.each_with_index do |student, i|
 			puts "#{i+1}. "+"#{student[:name]}".ljust(longest_name)+" Nationality: "+"#{student[:nationality]}".ljust(longest_nationality)+" Cohort: #{student[:cohort]}"
 		end
 	end
 end
 
-def print_footer(names)
+def print_footer
 	puts ""
-	puts "Overall we have #{names.length} great students"
+	puts "Overall we have #{@students.length} great students"
 end
 
-def input_students(students)
+def input_students
 	puts "Please enter Student Information"
 	# get the first name
 	print "Name: "
@@ -45,9 +46,9 @@ def input_students(students)
 		if nationality.empty?
 			nationality = "(Na)"
 		end
-		students << {:name => name, :cohort => cohort, :nationality => nationality}
+		@students << {:name => name, :cohort => cohort, :nationality => nationality}
 		puts ""
-		puts "Now we have #{students.length} student(s)"
+		puts "Now we have #{@students.length} student(s)"
 		puts "Would you like to enter another? [Y/N] "
 		answer = gets.chomp
 		puts ""
@@ -66,32 +67,41 @@ def input_students(students)
 		end	
 	end
 	# return the array of students
-	students
 end
 
-def menu_loop
-	students = []
-	loop do
-		puts ""
+def prompt
+	puts ""
 		puts "What would you like to do?"
 		puts "--------------------------"
 		puts "1. Input Students"
 		puts "2. Show Students"
 		puts "9. Exit"
 		puts ""
-		choice = gets.chomp
-		case choice
-		when "1"
-			students = input_students(students)
-		when "2"
-			print_header
-			print_students(students)
-			print_footer(students)
-		when "9"
-			exit
-		else	
-			puts "I don't know what you meant, try again"
-		end
+end
+
+def show_students
+	print_header
+	print_students
+	print_footer	
+end
+
+def process(choice)
+	case choice
+	when "1"
+		students = input_students
+	when "2"
+		show_students
+	when "9"
+		exit
+	else	
+		puts "I don't know what you meant, try again"
+	end
+end
+
+def menu_loop
+	loop do
+		prompt
+		process(gets.chomp)
 	end
 end
 
