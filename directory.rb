@@ -34,11 +34,11 @@ def input_students
 	puts "Please enter Student Information"
 	# get the first name
 	print "Name: "
-	name = gets.chomp
+	name = STDIN.gets.chomp
 	print "Now enter their Cohort: "
-	cohort = gets.chomp
+	cohort = STDIN.gets.chomp
 	print "And their Nationality: "
-	nationality = gets.chomp
+	nationality = STDIN.gets.chomp
 	while !name.empty? do
 		if cohort.empty?
 			cohort = "(Na)"
@@ -50,18 +50,18 @@ def input_students
 		puts ""
 		puts "Now we have #{@students.length} student(s)"
 		puts "Would you like to enter another? [Y/N] "
-		answer = gets.chomp
+		answer = STDIN.gets.chomp
 		puts ""
 		if answer.casecmp('y') == 0
 			print "Name:"
-			name = gets.chomp
+			name = STDIN.gets.chomp
 			if name.empty?
 				break
 			end
 			print "Cohort:"
-			cohort = gets.chomp
+			cohort = STDIN.gets.chomp
 			print "Nationality:"
-			nationality = gets.chomp
+			nationality = STDIN.gets.chomp
 		elsif answer.casecmp('n') == 0
 			name = ""
 		end	
@@ -109,7 +109,7 @@ end
 def menu_loop
 	loop do
 		prompt
-		process(gets.chomp)
+		process(STDIN.gets.chomp)
 	end
 end
 
@@ -124,8 +124,8 @@ def save_students
 	file.close
 end
 
-def load_students
-	file = File.open("students.csv","r")
+def load_students(filename = "students.csv")
+	file = File.open(filename,"r")
 	file.readlines.each do |line|
 		name, nationality, cohort = line.chomp.split(",")
 		name_exists = false
@@ -141,5 +141,17 @@ def load_students
 	file.close
 end
 
+def try_load
+	filename = ARGV.first
+	return if filename.nil?
+	if File.exists?(filename)
+		load_students(filename)
+	else
+		puts "Sorry #{filename} doesnt exist"
+		exit
+	end
+end
+
 # Nothing happens until we call the methods 
+try_load
 menu_loop
