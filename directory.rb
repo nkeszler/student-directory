@@ -29,10 +29,8 @@ def print_footer(names)
 	puts "Overall we have #{names.length} great students"
 end
 
-def input_students
+def input_students(students)
 	puts "Please enter Student Information"
-	# Create an empty array
-	students = []
 	# get the first name
 	print "Name: "
 	name = gets.chomp
@@ -70,21 +68,32 @@ def input_students
 	# return the array of students
 	students
 end
-# Lets put all the students in an array
-=begin
-students = [
-	{:name => "Nicki", :cohort => :november},
-	{:name => "Chris", :cohort => :november},
-	{:name => "Georgio", :cohort => :november},
-	{:name => "JB", :cohort => :november},
-	{:name => "Lara", :cohort => :november},
-	{:name => "James", :cohort => :november},
-	{:name => "Ken", :cohort => :novemeber}
-]
-=end
+
+def menu_loop
+	students = []
+	loop do
+		puts ""
+		puts "What would you like to do?"
+		puts "--------------------------"
+		puts "1. Input Students"
+		puts "2. Show Students"
+		puts "9. Exit"
+		puts ""
+		choice = gets.chomp
+		case choice
+		when "1"
+			students = input_students(students)
+		when "2"
+			print_header
+			print_students(students)
+			print_footer(students)
+		when "9"
+			exit
+		else	
+			puts "I don't know what you meant, try again"
+		end
+	end
+end
 
 # Nothing happens until we call the methods 
-students = input_students
-print_header
-print_students(students)
-print_footer(students)
+menu_loop
