@@ -76,6 +76,7 @@ def prompt
 		puts "1. Input Students"
 		puts "2. Show Students"
 		puts "3. Save Students to File"
+		puts "4. Load Students from File"
 		puts "9. Exit"
 		puts ""
 end
@@ -94,6 +95,10 @@ def process(choice)
 		show_students
 	when "3"
 		save_students
+		puts "Students Saved!"
+	when "4"
+		load_students
+		puts "#{@students.length} Students Loaded!"
 	when "9"
 		exit
 	else	
@@ -113,8 +118,25 @@ def save_students
 	file = File.open("students.csv","w")
 	@students.each do |student|
 		student_data = [student[:name], student[:nationality], student[:cohort]]
-		csv_line = student_data.join(", ")
+		csv_line = student_data.join(",")
 		file.puts csv_line
+	end
+	file.close
+end
+
+def load_students
+	file = File.open("students.csv","r")
+	file.readlines.each do |line|
+		name, nationality, cohort = line.chomp.split(",")
+		name_exists = false
+		@students.each do |student|
+			if student[:name] == name
+				name_exists = true
+			end
+		end
+		if !name_exists
+			@students << {:name => name, :nationality => nationality, :cohort => cohort}
+		end
 	end
 	file.close
 end
